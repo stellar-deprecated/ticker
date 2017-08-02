@@ -1,0 +1,34 @@
+#Every field must have some string value. So when the base is XLM, do not leave base_issuer blank
+#To list multiple issuers for a currency, enter them as a comma seperated list of strings
+
+Title = "Currency Pairs"
+
+[[pair]]
+base = "XLM"
+base_issuer = "native"
+counter = "BTC"
+counter_issuer = ["GATEMHCCKCY67ZUCKTROYN24ZYT5GK4EQZ65JJLDHKHRUZI3EUEKMTCH"]
+
+[[pair]]
+base = "XLM"
+base_issuer = "native" 
+counter = "CNY"
+counter_issuer = ["GAREELUB43IRHWEASCFBLKHURCGMHE5IF6XSE7EXDLACYHGRHM43RFOX"]
+
+[[pair]]
+base = "XLM"
+base_issuer = "native"
+counter = "EURT"
+counter_issuer = ["GAP5LETOV6YIE62YAM56STDANPRDO7ZFDBGSNHJQIYGGKSMOZAHOOS2S"]
+
+[[pair]]
+base = "XLM"
+base_issuer = "native"
+counter = "JPY"
+counter_issuer = ["GBVAOIACNSB7OVUXJYC5UE2D4YK2F7A24T7EE5YOMN4CE6GCHUTOUQXM"]
+
+[[pair]]
+base = "XLM"
+base_issuer = "native"
+counter = "PHP"
+counter_issuer = ["GBUQWP3BOUZX34TOND2QV7QQ7K7VJTG6VSE7WMLBTMDJLLAW7YKGU6EP"]
