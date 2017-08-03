@@ -18,9 +18,10 @@ type currencies struct {
 }    
 
 type pair struct {
+    Name  			 string
     Base             string
     Base_issuer      string
-    Counter          string
+    Counter          []string
     Counter_issuer   []string
 }
 
@@ -65,8 +66,7 @@ func main() {
    
     for _, pair:= range config.Pair { //iterate through currency pairs
     		aggregate_data = blank //reset the data struct
-    		name := (pair.Base + "/" + pair.Counter)
-    		fmt.Println("\n------------------------------------------", name)
+    		fmt.Println("\n------------------------------------------", pair.Name)
         for index, _:= range pair.Counter_issuer { //iterate through issuers of given currency
             link := get_link(pair, index, 200) 
             aggregate_data = append(aggregate_data, get_book(link)...) //struct contains all transactions for given currency pair
@@ -76,7 +76,7 @@ func main() {
         buyer_volume, seller_volume := get_volume(aggregate_data)
 
         fmt.Println(price, buyer_volume, seller_volume)
-        to_write = append(to_write, ToFile{Name: name, Price: price, Base_Volume: buyer_volume, Counter_Volume: seller_volume})
+        to_write = append(to_write, ToFile{Name: pair.Name, Price: price, Base_Volume: buyer_volume, Counter_Volume: seller_volume})
     }
 // Write to file
     path := "exchange.json"
@@ -94,12 +94,12 @@ func main() {
 func get_link(currency pair, index int, limit int) string {
     var link string
     switch { 
-    case currency.Counter == "XLM":
+    case currency.Counter[index] == "XLM":
         link = fmt.Sprintf("https://horizon.stellar.org/order_book/trades?selling_asset_type=credit_alphanum4&selling_asset_code=%s&selling_asset_issuer=%s&buying_asset_type=native&limit=%d&order=desc", currency.Base, currency.Base_issuer, limit)
     case currency.Base == "XLM":
-        link = fmt.Sprintf("https://horizon.stellar.org/order_book/trades?selling_asset_type=native&buying_asset_type=credit_alphanum4&buying_asset_code=%s&buying_asset_issuer=%s&limit=%d&order=desc", currency.Counter, currency.Counter_issuer[index], limit)
+        link = fmt.Sprintf("https://horizon.stellar.org/order_book/trades?selling_asset_type=native&buying_asset_type=credit_alphanum4&buying_asset_code=%s&buying_asset_issuer=%s&limit=%d&order=desc", currency.Counter[index], currency.Counter_issuer[index], limit)
     default:
-        link = fmt.Sprintf("https://horizon.stellar.org/order_book/trades?selling_asset_type=credit_alphanum4&selling_asset_code=%s&selling_asset_issuer=%s&buying_asset_type=credit_alphanum4&buying_asset_code=%s&buying_asset_issuer=%s&limit=%d&order=desc",currency.Base, currency.Base_issuer, currency.Counter, currency.Counter_issuer, limit)
+        link = fmt.Sprintf("https://horizon.stellar.org/order_book/trades?selling_asset_type=credit_alphanum4&selling_asset_code=%s&selling_asset_issuer=%s&buying_asset_type=credit_alphanum4&buying_asset_code=%s&buying_asset_issuer=%s&limit=%d&order=desc",currency.Base, currency.Base_issuer, currency.Counter[index], currency.Counter_issuer, limit)
     }
     return link
 }

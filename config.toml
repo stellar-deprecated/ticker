@@ -1,34 +1,47 @@
 #Every field must have some string value. So when the base is XLM, do not leave base_issuer blank
-#To list multiple issuers for a currency, enter them as a comma seperated list of strings
+#To aggregate volume across issuers: enter a comma seperated list of asset codes in "counter" and a list of issuers in "counter_issuer"
+#The first counter value corresponds to the first counter_issuer value and so on.
+#EXAMPLE
+#[[pair]]
+#name = "XLM_BTC"
+#base = "XLM"
+#base_issuer = "native"
+#counter = ["BTC", "EURT"]
+#counter_issuer = ["GATEMHCCKCY67ZUCKTROYN24ZYT5GK4EQZ65JJLDHKHRUZI3EUEKMTCH", "GAP5LETOV6YIE62YAM56STDANPRDO7ZFDBGSNHJQIYGGKSMOZAHOOS2S"]
 
 Title = "Currency Pairs"
 
 [[pair]]
+name = "XLM_BTC"
 base = "XLM"
 base_issuer = "native"
-counter = "BTC"
+counter = ["BTC"]
 counter_issuer = ["GATEMHCCKCY67ZUCKTROYN24ZYT5GK4EQZ65JJLDHKHRUZI3EUEKMTCH"]
 
 [[pair]]
+name = "XLM_CNY"
 base = "XLM"
 base_issuer = "native" 
-counter = "CNY"
+counter = ["CNY"]
 counter_issuer = ["GAREELUB43IRHWEASCFBLKHURCGMHE5IF6XSE7EXDLACYHGRHM43RFOX"]
 
 [[pair]]
+name = "XLM_EURT"
 base = "XLM"
 base_issuer = "native"
-counter = "EURT"
+counter = ["EURT"]
 counter_issuer = ["GAP5LETOV6YIE62YAM56STDANPRDO7ZFDBGSNHJQIYGGKSMOZAHOOS2S"]
 
 [[pair]]
+name = "XLM_JPY"
 base = "XLM"
 base_issuer = "native"
-counter = "JPY"
+counter = ["JPY"]
 counter_issuer = ["GBVAOIACNSB7OVUXJYC5UE2D4YK2F7A24T7EE5YOMN4CE6GCHUTOUQXM"]
 
 [[pair]]
+name = "XLM_PHP"
 base = "XLM"
 base_issuer = "native"
-counter = "PHP"
+counter = ["PHP"]
 counter_issuer = ["GBUQWP3BOUZX34TOND2QV7QQ7K7VJTG6VSE7WMLBTMDJLLAW7YKGU6EP"]
