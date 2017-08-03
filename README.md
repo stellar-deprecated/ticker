@@ -12,20 +12,20 @@ The top of the config.toml file should have a Title line that resembles:
     Title = "Currency Pairs" 
 
 Below the title, currency pairs can be listed like so:  
-    [[pair]] 
-    name = "XLM_BTC" 
-    base = "XLM" 
-    base_issuer = "native" 
-    counter = ["BTC"] 
-    counter_issuer = ["GATEMHCCKCY67ZUCKTROYN24ZYT5GK4EQZ65JJLDHKHRUZI3EUEKMTCH"] 
- 
-If you wish to aggregate the volume for mutliple tokens and issuers, you can enter the values as a comma seperated list. Example below: 
-    [[pair]] 
-    name = "XLM_BTC" 
-    base = "XLM" 
-    base_issuer = "native" 
-    counter = ["BTC", "EURT"] 
-    counter_issuer = ["GATEMHCCKCY67ZUCKTROYN24ZYT5GK4EQZ65JJLDHKHRUZI3EUEKMTCH", "GAP5LETOV6YIE62YAM56STDANPRDO7ZFDBGSNHJQIYGGKSMOZAHOOS2S"] 
+&nbsp;[[pair]]  
+&nbsp;name = "XLM_BTC" 
+&nbsp;base = "XLM"  
+&nbsp;base_issuer = "native" 
+&nbsp;counter = ["BTC"] 
+&nbsp;counter_issuer = ["GATEMHCCKCY67ZUCKTROYN24ZYT5GK4EQZ65JJLDHKHRUZI3EUEKMTCH"]  
+  
+If you wish to aggregate the volume for mutliple tokens and issuers, you can enter the values as a comma seperated list. Example below:  
+&nbsp;[[pair]]  
+&nbsp;name = "XLM_BTC" 
+&nbsp;base = "XLM" 
+&nbsp;base_issuer = "native"  
+&nbsp;counter = ["BTC", "EURT"]  
+&nbsp;counter_issuer = ["GATEMHCCKCY67ZUCKTROYN24ZYT5GK4EQZ65JJLDHKHRUZI3EUEKMTCH", "GAP5LETOV6YIE62YAM56STDANPRDO7ZFDBGSNHJQIYGGKSMOZAHOOS2S"] 
   
 The asset "BTC" corresponds to the issuer starting with "GAT", and the asset "EURT" corresponds to the issuer starting with "GAP". To add more values, continue the comma seperated list. Every counter must have its corresponding issuer listed at the appropriate place in counter_issuer. Ie. The third item in counter must correspond to the third item in counter_issuer.  
   
