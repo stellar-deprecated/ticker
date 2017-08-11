@@ -176,7 +176,7 @@ func this_page(sub_resp OffersPage, upper int) int{ //performs a binary search t
     case yesterday.Before(sub_resp.Embedded.Records[upper-1].When): //all the trades on this page, move to next page
     	return -2
     case yesterday.After(sub_resp.Embedded.Records[lower].When): // none of the trades on this page
- 		return -1
+        return -1
     default:
         for {
             index = (upper + lower + 1)/2
