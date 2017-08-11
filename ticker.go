@@ -115,8 +115,9 @@ func get_book(link string) []Offer{
 		sub_resp = get_request(link) // perform get request on link
 	    upper = len(sub_resp.Embedded.Records) //the total number of trades on the page
 	    result = this_page(sub_resp, upper-1) //binary search to find oldest trade to happen within 24 hours
-
 	    switch{
+        case result == -3: //no entries exist
+            return data.Embedded.Records
 		case result == -2: //next page
 			data.Embedded.Records = append(data.Embedded.Records, sub_resp.Embedded.Records...)
 	        link = sub_resp.Links.Prev.Href
@@ -170,7 +171,9 @@ func this_page(sub_resp OffersPage, upper int) int{ //performs a binary search t
 	utc := time.Now().UTC()
     yesterday := utc.AddDate(0, 0, -1)
     switch {
- 	case yesterday.Before(sub_resp.Embedded.Records[upper-1].When): //all the trades on this page, move to next page
+    case len(sub_resp.Embedded.Records) == 0:
+        return -3
+    case yesterday.Before(sub_resp.Embedded.Records[upper-1].When): //all the trades on this page, move to next page
     	return -2
  	case yesterday.After(sub_resp.Embedded.Records[lower].When): // none of the trades on this page
  		return -1
@@ -200,7 +203,9 @@ func get_price(Pair pair, index int) float64{
 	link := get_link(Pair, index, 1)
 
 	sub_resp = get_request(link)
-
+    if len(sub_resp.Embedded.Records) == 0{
+        return 0
+    }
 	bought, err := strconv.ParseFloat(sub_resp.Embedded.Records[0].Bought, 64)
 	sold, err := strconv.ParseFloat(sub_resp.Embedded.Records[0].Sold, 64)
 	if err!=nil {
