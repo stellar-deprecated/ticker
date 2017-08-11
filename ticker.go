@@ -70,11 +70,9 @@ func main() {
         for index, _:= range pair.Counter_issuer { //iterate through issuers of given currency
             link := get_link(pair, index, 200) 
             aggregate_data = append(aggregate_data, get_book(link)...) //struct contains all transactions for given currency pair
-          }
-          
-          price := get_price(pair, 0)
+        }
+        price := get_price(pair, 0)
         buyer_volume, seller_volume := get_volume(aggregate_data)
-
         fmt.Println(price, buyer_volume, seller_volume)
         to_write = append(to_write, ToFile{Name: pair.Name, Price: price, Base_Volume: buyer_volume, Counter_Volume: seller_volume})
     }
