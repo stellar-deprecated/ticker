@@ -60,7 +60,7 @@ func main() {
     var aggregate_data []Offer
     var blank []Offer
 // Read the configuration file which determines currency pairs
-    if _, err := toml.DecodeFile("config2.toml", &config); err != nil {
+    if _, err := toml.DecodeFile("config.toml", &config); err != nil {
         panic(err)
     }
    
