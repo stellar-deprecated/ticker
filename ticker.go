@@ -1,24 +1,24 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
-	"time"
-	"encoding/json"
-	"log"
-	"strings"
-	"github.com/BurntSushi/toml"
-	"os"
-	"strconv"
+    "fmt"
+    "net/http"
+    "time"
+    "encoding/json"
+    "log"
+    "strings"
+    "github.com/BurntSushi/toml"
+    "os"
+    "strconv"
 )
 
 type currencies struct {
     Title            string
     Pair             []pair
-}    
+}  
 
 type pair struct {
-    Name  			 string
+    Name             string
     Base             string
     Base_issuer      string
     Counter          []string
@@ -26,36 +26,36 @@ type pair struct {
 }
 
 type OffersPage struct {
-	Links struct {
-		Self Link `json:"self"`
-		Next Link `json:"next"`
-		Prev Link `json:"prev"`
-	} `json:"_links"`
-	Embedded struct {
-		Records []Offer `json:"records"`
-	} `json:"_embedded"`
+    Links struct {
+        Self Link `json:"self"`
+        Next Link `json:"next"`
+        Prev Link `json:"prev"`
+    } `json:"_links"`
+    Embedded struct {
+        Records []Offer `json:"records"`
+    } `json:"_embedded"`
 }
 
 type Link struct {
-	Href   string `json:"href"`
+    Href   string `json:"href"`
 }
 
 type Offer struct {
 
-	Sold    string `json:"sold_amount"`
-	Bought  string `json:"bought_amount"`
-	When    time.Time `json:"created_at"`
+    Sold    string `json:"sold_amount"`
+    Bought  string `json:"bought_amount"`
+    When    time.Time `json:"created_at"`
 }
 
 type ToFile struct {
-	Name			string
-	Price			float64
-	Base_Volume		float64
-	Counter_Volume	float64
+    Name            string
+    Price           float64
+    Base_Volume     float64
+    Counter_Volume  float64
 }
 
 func main() {
-	var config currencies
+    var config currencies
     var to_write []ToFile
     var aggregate_data []Offer
     var blank []Offer
@@ -65,14 +65,14 @@ func main() {
     }
    
     for _, pair:= range config.Pair { //iterate through currency pairs
-    		aggregate_data = blank //reset the data struct
-    		fmt.Println("\n------------------------------------------", pair.Name)
+            aggregate_data = blank //reset the data struct
+            fmt.Println("\n------------------------------------------", pair.Name)
         for index, _:= range pair.Counter_issuer { //iterate through issuers of given currency
             link := get_link(pair, index, 200) 
             aggregate_data = append(aggregate_data, get_book(link)...) //struct contains all transactions for given currency pair
-      	}
-      	
-      	price := get_price(pair, 0)
+          }
+          
+          price := get_price(pair, 0)
         buyer_volume, seller_volume := get_volume(aggregate_data)
 
         fmt.Println(price, buyer_volume, seller_volume)
@@ -105,76 +105,76 @@ func get_link(currency pair, index int, limit int) string {
 }
 
 func get_book(link string) []Offer{
-	var sub_resp OffersPage
-	var data OffersPage
-	var result int
-	var upper int
-	
-	for {
-		fmt.Println(link)
-		sub_resp = get_request(link) // perform get request on link
-	    upper = len(sub_resp.Embedded.Records) //the total number of trades on the page
-	    result = this_page(sub_resp, upper-1) //binary search to find oldest trade to happen within 24 hours
-	    switch{
+    var sub_resp OffersPage
+    var data OffersPage
+    var result int
+    var upper int
+    
+    for {
+        fmt.Println(link)
+        sub_resp = get_request(link) // perform get request on link
+        upper = len(sub_resp.Embedded.Records) //the total number of trades on the page
+        result = this_page(sub_resp, upper-1) //binary search to find oldest trade to happen within 24 hours
+        switch{
         case result == -3: //no entries exist
             return data.Embedded.Records
-		case result == -2: //next page
-			data.Embedded.Records = append(data.Embedded.Records, sub_resp.Embedded.Records...)
-	        link = sub_resp.Links.Prev.Href
-	        link = strings.Replace(link, "\u0026", "&", -1)
-	    case result == -1: //no relevant trades on this page
-	        return data.Embedded.Records
-	    default: //copy all trades that occured within past 24 hours
-	    	data.Embedded.Records = append(data.Embedded.Records, sub_resp.Embedded.Records[0:(result+1)]...)
-	    	return data.Embedded.Records    
-	    }
-	}
+        case result == -2: //next page
+            data.Embedded.Records = append(data.Embedded.Records, sub_resp.Embedded.Records...)
+            link = sub_resp.Links.Prev.Href
+            link = strings.Replace(link, "\u0026", "&", -1)
+        case result == -1: //no relevant trades on this page
+            return data.Embedded.Records
+        default: //copy all trades that occured within past 24 hours
+            data.Embedded.Records = append(data.Embedded.Records, sub_resp.Embedded.Records[0:(result+1)]...)
+            return data.Embedded.Records    
+        }
+    }
 }
 
 func get_request(link string) OffersPage { //performs get request
-	var sub_resp OffersPage
+    var sub_resp OffersPage
 
-	tr := &http.Transport{
-	MaxIdleConns:       10,
-	IdleConnTimeout:    30 * time.Second,
-	DisableCompression: true,
-	}
-
-	client := &http.Client{Transport: tr}
-
-	resp, err := client.Get(link)
-	if err != nil {
-		log.Fatalln("unable to make request: ", err)
+    tr := &http.Transport{
+    MaxIdleConns:       10,
+    IdleConnTimeout:    30 * time.Second,
+    DisableCompression: true,
     }
-	decodeResponse(resp, &sub_resp)
 
-	return sub_resp
+    client := &http.Client{Transport: tr}
+
+    resp, err := client.Get(link)
+    if err != nil {
+        log.Fatalln("unable to make request: ", err)
+    }
+    decodeResponse(resp, &sub_resp)
+
+    return sub_resp
 }
 
 func decodeResponse(resp *http.Response, object interface{}) (err error) { //puts response from get request in given struct
-	defer resp.Body.Close()
-	decoder := json.NewDecoder(resp.Body)
+    defer resp.Body.Close()
+    decoder := json.NewDecoder(resp.Body)
 
-	if !(resp.StatusCode >= 200 && resp.StatusCode < 300) {
-		panic(resp.StatusCode)
-	}
-	err = decoder.Decode(&object)
-	if err != nil {
-		return
-	}
-	return
+    if !(resp.StatusCode >= 200 && resp.StatusCode < 300) {
+        panic(resp.StatusCode)
+    }
+    err = decoder.Decode(&object)
+    if err != nil {
+        return
+    }
+    return
 }
 
 func this_page(sub_resp OffersPage, upper int) int{ //performs a binary search through a page to determine how many trades occured in last 24 hours
-	var index int
-	lower := 0
-	utc := time.Now().UTC()
+    var index int
+    lower := 0
+    utc := time.Now().UTC()
     yesterday := utc.AddDate(0, 0, -1)
     switch {
     case len(sub_resp.Embedded.Records) == 0:
         return -3
     case yesterday.Before(sub_resp.Embedded.Records[upper-1].When): //all the trades on this page, move to next page
-    	return -2
+        return -2
     case yesterday.After(sub_resp.Embedded.Records[lower].When): // none of the trades on this page
         return -1
     default:
@@ -182,36 +182,36 @@ func this_page(sub_resp OffersPage, upper int) int{ //performs a binary search t
             index = (upper + lower + 1)/2
             if yesterday.After(sub_resp.Embedded.Records[index].When){
                 if (upper-lower) <= 1{
-                	return lower
+                    return lower
                 }
-           		upper = index
+                   upper = index
             } else{
                 if (upper-lower) <= 1{
                     return upper
                 }
-            	lower = index
+                lower = index
             }
         }
-	}
-	return -3
+    }
+    return -3
 }
 
 func get_price(Pair pair, index int) float64{
-	var sub_resp OffersPage
-	var err error
+    var sub_resp OffersPage
+    var err error
 
-	link := get_link(Pair, index, 1)
+    link := get_link(Pair, index, 1)
 
-	sub_resp = get_request(link)
+    sub_resp = get_request(link)
     if len(sub_resp.Embedded.Records) == 0{
         return 0
     }
-	bought, err := strconv.ParseFloat(sub_resp.Embedded.Records[0].Bought, 64)
-	sold, err := strconv.ParseFloat(sub_resp.Embedded.Records[0].Sold, 64)
-	if err!=nil {
-		panic(err)
-	}
-	return bought/sold
+    bought, err := strconv.ParseFloat(sub_resp.Embedded.Records[0].Bought, 64)
+    sold, err := strconv.ParseFloat(sub_resp.Embedded.Records[0].Sold, 64)
+    if err!=nil {
+        panic(err)
+    }
+    return bought/sold
 }
 
 func get_volume(data []Offer) (float64, float64) {
@@ -224,7 +224,7 @@ func get_volume(data []Offer) (float64, float64) {
         bought, err = strconv.ParseFloat(item.Sold, 64)
         sold, err = strconv.ParseFloat(item.Bought, 64)
         if err != nil {
-        	panic(err)
+            panic(err)
         }
         buyer_volume += bought 
         seller_volume += sold 
