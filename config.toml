@@ -91,5 +91,11 @@ base_issuer = "native"
 counter = ["LTC"]
 counter_issuer = ["GC5LOR3BK6KIOK7GKAUD5EGHQCMFOGHJTC7I3ELB66PTDFXORC2VM5LP"]
 
+[[pair]]
+name = "XLM_EQD"
+base = "XLM"
+base_issuer = "native"
+counter = ["EQD"]
+counter_issuer = ["GCGEQJR3E5BVMQYSNCHPO6NPP3KOT4VVZHIOLSRSNLE2GFY7EWVSLLTN"]
 
 
