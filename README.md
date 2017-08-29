@@ -45,3 +45,6 @@ go run ticker.go
 ## output ## 
 
 exchange.json
+
+## Webhook
+The webhooks for this repository, will trigger a build/deploy on buildmeister
