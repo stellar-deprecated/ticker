@@ -55,12 +55,12 @@ base_issuer = "native"
 counter = ["XRP"]
 counter_issuer = ["GA7FCCMTTSUIC37PODEL6EOOSPDRILP6OQI5FWCWDDVDBLJV72W6RINZ"]
 
-[[pair]]
-name = "XLM_GFT"
-base = "XLM"
-base_issuer = "native"
-counter = ["GFT"]
-counter_issuer = ["GAAZUE4PKMKLA7QC2MPUIUXY7BZK2WUCK7Q5EELSDLK4FE3X4DZTSCKN"]
+#[[pair]]
+#name = "XLM_GFT"
+#base = "XLM"
+#base_issuer = "native"
+#counter = ["GFT"]
+#counter_issuer = ["GAAZUE4PKMKLA7QC2MPUIUXY7BZK2WUCK7Q5EELSDLK4FE3X4DZTSCKN"]
 
 
 #[[pair]]
@@ -70,12 +70,12 @@ counter_issuer = ["GAAZUE4PKMKLA7QC2MPUIUXY7BZK2WUCK7Q5EELSDLK4FE3X4DZTSCKN"]
 #counter = ["MOBI"]
 #counter_issuer = ["GDCIUCGL7VEMMF6VYJOW75KQ5ZCLHAQBRM6EPFTKCRWUYVUOOYQCKC5A"]
 
-[[pair]]
-name = "XLM_SEED"
-base = "XLM"
-base_issuer = "native"
-counter = ["SEED"]
-counter_issuer = ["GDPFSEBZO2W4TLWZO7FIMMG3QONHXYVF6LUULI6HUJS6PJLE4TRZEXLF"]
+#[[pair]]
+#name = "XLM_SEED"
+#base = "XLM"
+#base_issuer = "native"
+#counter = ["SEED"]
+#counter_issuer = ["GDPFSEBZO2W4TLWZO7FIMMG3QONHXYVF6LUULI6HUJS6PJLE4TRZEXLF"]
 
 [[pair]]
 name = "XLM_XEL"
@@ -91,25 +91,25 @@ base_issuer = "GATEMHCCKCY67ZUCKTROYN24ZYT5GK4EQZ65JJLDHKHRUZI3EUEKMTCH"
 counter = ["XEL"]
 counter_issuer = ["GAXELY4AOIRVONF7V25BUPDNKZYIVT6CWURG7R2I6NQU26IQSQODBVCS"]
 
-[[pair]]
-name = "XLM_LTC"
-base = "XLM"
-base_issuer = "native"
-counter = ["LTC"]
-counter_issuer = ["GC5LOR3BK6KIOK7GKAUD5EGHQCMFOGHJTC7I3ELB66PTDFXORC2VM5LP"]
+#[[pair]]
+#name = "XLM_LTC"
+#base = "XLM"
+#base_issuer = "native"
+#counter = ["LTC"]
+#counter_issuer = ["GC5LOR3BK6KIOK7GKAUD5EGHQCMFOGHJTC7I3ELB66PTDFXORC2VM5LP"]
 
-[[pair]]
-name = "XLM_EQD"
-base = "XLM"
-base_issuer = "native"
-counter = ["EQD"]
-counter_issuer = ["GCGEQJR3E5BVMQYSNCHPO6NPP3KOT4VVZHIOLSRSNLE2GFY7EWVSLLTN"]
+#[[pair]]
+#name = "XLM_EQD"
+#base = "XLM"
+#base_issuer = "native"
+#counter = ["EQD"]
+#counter_issuer = ["GCGEQJR3E5BVMQYSNCHPO6NPP3KOT4VVZHIOLSRSNLE2GFY7EWVSLLTN"]
 
 [[pair]]
 name = "XLM_ICN"
 base = "XLM"
 base_issuer = "native"
 counter = ["ICN"]
-counter_issuer = ["GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR"] # erc20.net
+counter_issuer = ["GBDEVU63Y6NTHJQQZIKVTC23NWLQVP3WJ2RI2OTSJTNYOIGICST6DUXR"] # apay.io
 
 
